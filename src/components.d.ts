@@ -5,34 +5,43 @@
  */
 
 
-import '@stencil/core';
-
-
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
+import { JSX } from '@stencil/core';
 
 
 export namespace Components {
-
   interface HelloWorld {
     'birthyear': any;
     'firstname': any;
     'lastname': any;
-    'sayMyName': () => void;
+    'sayMyName': () => Promise<void>;
   }
-  interface HelloWorldAttributes extends StencilHTMLAttributes {
+}
+
+declare namespace LocalJSX {
+  interface HelloWorld extends JSXBase.HTMLAttributes {
     'birthyear'?: any;
     'firstname'?: any;
     'lastname'?: any;
   }
+
+  interface IntrinsicElements {
+    'hello-world': HelloWorld;
+  }
 }
 
-declare global {
-  interface StencilElementInterfaces {
-    'HelloWorld': Components.HelloWorld;
-  }
+export { LocalJSX as JSX };
 
-  interface StencilIntrinsicElements {
-    'hello-world': Components.HelloWorldAttributes;
+
+declare module "@stencil/core" {
+  export namespace JSX {
+    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
+}
+
+
+declare global {
+
 
 
   interface HTMLHelloWorldElement extends Components.HelloWorld, HTMLStencilElement {}
@@ -42,20 +51,9 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
-    'hello-world': HTMLHelloWorldElement
-  }
-
-  interface ElementTagNameMap {
     'hello-world': HTMLHelloWorldElement;
   }
 
-
-  export namespace JSX {
-    export interface Element {}
-    export interface IntrinsicElements extends StencilIntrinsicElements {
-      [tagName: string]: any;
-    }
-  }
-  export interface HTMLAttributes extends StencilHTMLAttributes {}
-
+  interface ElementTagNameMap extends HTMLElementTagNameMap {}
 }
+

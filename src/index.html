@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>Stencil Component Starter</title>
-  <script src="/build/helloworld.js"></script>
+  <script type="module" src="build/helloworld.esm.js"></script>
+  <script nomodule src="build/helloworld.js"></script>
+
 </head>
 <body>
   <hello-world firstname="John" lastname="Doe" birthyear="1966"></hello-world>

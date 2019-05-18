@@ -1,4 +1,4 @@
-import { Component, Prop, Method } from '@stencil/core';
+import { Component, Prop, Method, h } from '@stencil/core';
 
 @Component({
   tag: 'hello-world',
@@ -18,7 +18,7 @@ export class HelloWorld {
   }
 
   @Method()
-  sayMyName() {
+  async sayMyName() {
     alert(`Hello ${this.firstname} ${this.lastname}`);
   }
 
